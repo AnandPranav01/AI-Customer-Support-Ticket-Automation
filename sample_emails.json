@@ -1,0 +1,86 @@
+[
+  {
+    "id": "sample-1-critical-bug",
+    "from": "Priya Sharma <priya.sharma@acmecorp.com>",
+    "subject": "URGENT - App keeps crashing immediately",
+    "body": "This is unacceptable, your app crashes every time I open it. Please fix this immediately.",
+    "expected_category": "Bug Report",
+    "expected_priority": "Critical",
+    "expected_sentiment": "Negative"
+  },
+  {
+    "id": "sample-2-billing",
+    "from": "David Chen <d.chen@gmail.com>",
+    "subject": "Charged twice this month",
+    "body": "Hello, I noticed I was charged on my card twice this billing cycle for the same invoice. Could you please look into this payment issue? Thanks, David",
+    "expected_category": "Billing",
+    "expected_priority": "Medium"
+  },
+  {
+    "id": "sample-3-sales",
+    "from": "Maria Lopez <maria@growthstartup.io>",
+    "subject": "Interested in Enterprise plan pricing",
+    "body": "Hi, we're a 200-person company evaluating your product for a company-wide rollout. Could someone share pricing and set up a demo call this week?",
+    "expected_category": "Sales Inquiry",
+    "expected_priority": "Medium"
+  },
+  {
+    "id": "sample-4-feature-request",
+    "from": "Tom Becker <tom.b@designstudio.com>",
+    "subject": "Feature idea: dark mode for dashboard",
+    "body": "Would love to see a dark mode feature added to the dashboard. No rush, just a suggestion that would improve daily use for our team.",
+    "expected_category": "Feature Request",
+    "expected_priority": "Low"
+  },
+  {
+    "id": "sample-5-bug-report",
+    "from": "Sana Iyer <sana.iyer@retailco.com>",
+    "subject": "Export to CSV button not working on reports page",
+    "body": "When I click the export button on the Reports page, nothing happens and no file downloads. This is an error that started after the last update.",
+    "expected_category": "Bug Report",
+    "expected_priority": "Medium"
+  },
+  {
+    "id": "sample-6-account-access",
+    "from": "James Wu <jwu@financeplus.com>",
+    "subject": "Locked out of my account",
+    "body": "I can't log in, my password reset isn't working and I don't have access to my account. I need this fixed soon for an important client meeting.",
+    "expected_category": "Account Access",
+    "expected_priority": "High"
+  },
+  {
+    "id": "sample-7-refund",
+    "from": "Angela Torres <angela.t@outlook.com>",
+    "subject": "Requesting refund for cancelled subscription",
+    "body": "I cancelled my subscription last week but was still charged for the next cycle. Please process a refund for this charge.",
+    "expected_category": "Refund Request",
+    "expected_priority": "Medium"
+  },
+  {
+    "id": "sample-8-general-positive",
+    "from": "Happy Customer <fan@example.com>",
+    "subject": "Just wanted to say thanks!",
+    "body": "I love this product, your team does excellent work. Really appreciate the support so far, thank you!",
+    "expected_category": "General Inquiry",
+    "expected_priority": "Medium",
+    "expected_sentiment": "Positive"
+  },
+  {
+    "id": "sample-9-edge-case-empty",
+    "from": "",
+    "subject": "",
+    "body": "asdkjaskld random text no real content !!! ??? %%%",
+    "expected_category": "General Inquiry",
+    "expected_priority": "Medium",
+    "note": "Edge case to test fallback handling when sender info and content are missing/garbled - sender_name should fall back to 'Unknown'"
+  },
+  {
+    "id": "sample-10-negative-escalation",
+    "from": "Robert Kim <robert.kim@bigclient.com>",
+    "subject": "This is the third time I'm emailing about the same problem",
+    "body": "I am extremely frustrated and disappointed. I've reported this bug twice before and it is still not working. This is unacceptable.",
+    "expected_category": "Bug Report",
+    "expected_priority": "Medium",
+    "expected_sentiment": "Negative"
+  }
+]
