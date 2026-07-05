@@ -1,0 +1,320 @@
+{
+  "name": "Task4 - AI Support Ticket Automation (Gemini + Google Sheets)",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {}
+      },
+      "id": "acf50e64-4bbf-4b53-ae15-646be483ab6c",
+      "name": "Gmail Trigger - Monitor Support Inbox",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "CVmbUjZs6q1ecF0Y",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract and normalize email metadata\nconst item = $input.item.json;\n\nconst senderName = item.From ? item.From.split('<')[0].trim().replace(/\"/g, '') : 'Unknown';\nconst senderEmailMatch = (item.From || '').match(/<(.+)>/);\nconst senderEmail = senderEmailMatch ? senderEmailMatch[1] : (item.From || '');\n\nreturn {\n  json: {\n    sender_name: senderName,\n    sender_email: senderEmail,\n    email_subject: item.Subject || '(no subject)',\n    email_body: item.text || item.snippet || '',\n    received_at: item.Date || new Date().toISOString()\n  }\n};"
+      },
+      "id": "30c93e21-a8d6-458a-91ff-c3f9a6c9d803",
+      "name": "Extract Email Metadata",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1vY3kqizGy3r5tizyUEDXS6X2LH9xmDMWrcfZkJWzoh8",
+          "mode": "list",
+          "cachedResultName": "Support Tic",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vY3kqizGy3r5tizyUEDXS6X2LH9xmDMWrcfZkJWzoh8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Support Tic",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vY3kqizGy3r5tizyUEDXS6X2LH9xmDMWrcfZkJWzoh8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "customer_name",
+              "displayName": "customer_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": " company",
+              "displayName": " company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sender_email",
+              "displayName": "sender_email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "issue_summary",
+              "displayName": "issue_summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "detailed_description",
+              "displayName": "detailed_description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sentiment",
+              "displayName": "sentiment",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "product_service",
+              "displayName": "product_service",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "suggested_department",
+              "displayName": "suggested_department",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "suggested_tags",
+              "displayName": "suggested_tags",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": " confidence_score",
+              "displayName": " confidence_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "received_at",
+              "displayName": "received_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "company",
+              "displayName": "company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "confidence_score",
+              "displayName": "confidence_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "3985fafa-4a23-4396-822a-0249854c0dbd",
+      "name": "Create Ticket in Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        672,
+        0
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2u0HLHIBnyhtDGAJ",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{$json.sender_email}}",
+        "subject": "=We've received your request - {{$json.issue_summary}}",
+        "message": "=Hi {{$json.customer_name}},<br><br>Thanks for reaching out. Here's a summary of what we received:<br>\"{{$json.issue_summary}}\"<br><br><b>Category:</b> {{$json.category}}<br><b>Priority:</b> {{$json.priority}}<br><br>Our {{$json.suggested_department}} team will follow up shortly.<br><br>Thanks,<br>Support Team",
+        "options": {}
+      },
+      "id": "03731944-7a3e-46f8-b277-21bb406a775a",
+      "name": "Send Acknowledgment Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [
+        928,
+        0
+      ],
+      "webhookId": "a18319e1-2bf4-4e6f-ac54-e04f64e8ade6",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "CVmbUjZs6q1ecF0Y",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const item = $input.item.json;\n\nconst subject = (item.email_subject || '').toLowerCase();\nconst body = (item.email_body || '').toLowerCase();\nconst text = subject + ' ' + body;\n\n// Category detection\nlet category = 'General Inquiry';\nif (/refund|money back|reimburse/.test(text)) category = 'Refund Request';\nelse if (/bill|invoice|payment|charge|subscription cost/.test(text)) category = 'Billing';\nelse if (/bug|error|crash|not working|broken|glitch/.test(text)) category = 'Bug Report';\nelse if (/password|login|access|account locked|can't sign in/.test(text)) category = 'Account Access';\nelse if (/feature|suggestion|would be nice|request.*add/.test(text)) category = 'Feature Request';\nelse if (/buy|purchase|pricing|demo|quote|upgrade plan/.test(text)) category = 'Sales Inquiry';\nelse if (/help|support|issue|problem|trouble/.test(text)) category = 'Technical Support';\n\n// Priority detection\nlet priority = 'Medium';\nif (/urgent|asap|critical|immediately|emergency|down/.test(text)) priority = 'Critical';\nelse if (/soon|important|high priority/.test(text)) priority = 'High';\nelse if (/whenever|no rush|low priority/.test(text)) priority = 'Low';\n\n// Sentiment detection\nlet sentiment = 'Neutral';\nif (/angry|frustrated|terrible|worst|unacceptable|disappointed|furious/.test(text)) sentiment = 'Negative';\nelse if (/thank|great|love|appreciate|excellent|happy/.test(text)) sentiment = 'Positive';\n\n// Department mapping\nconst departmentMap = {\n  'Billing': 'Finance',\n  'Refund Request': 'Finance',\n  'Sales Inquiry': 'Sales',\n  'Feature Request': 'Product Team',\n  'Bug Report': 'Technical Support',\n  'Account Access': 'Customer Success',\n  'Technical Support': 'Technical Support',\n  'General Inquiry': 'Customer Success'\n};\n\n// Simple tag extraction\nconst tags = [];\nif (/mobile|app/.test(text)) tags.push('mobile');\nif (/web|website|browser/.test(text)) tags.push('web');\nif (/payment|card/.test(text)) tags.push('payment');\nif (tags.length === 0) tags.push('general');\n\nreturn {\n  json: {\n    customer_name: item.sender_name || 'Unknown',\n    company: item.company || '',\n    sender_email: item.sender_email || '',\n    issue_summary: (item.email_subject || 'No subject').substring(0, 100),\n    detailed_description: item.email_body || '',\n    category: category,\n    priority: priority,\n    sentiment: sentiment,\n    product_service: '',\n    suggested_department: departmentMap[category],\n    suggested_tags: tags,\n    confidence_score: 0.75,\n    received_at: item.received_at || new Date().toISOString()\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        432,
+        0
+      ],
+      "id": "d5832b49-3f21-43c9-833d-a5d197f37dd1",
+      "name": "Rule Based Ticket Classify"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger - Monitor Support Inbox": {
+      "main": [
+        [
+          {
+            "node": "Extract Email Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Email Metadata": {
+      "main": [
+        [
+          {
+            "node": "Rule Based Ticket Classify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Ticket in Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Send Acknowledgment Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rule Based Ticket Classify": {
+      "main": [
+        [
+          {
+            "node": "Create Ticket in Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "8b333adb-40ea-4792-8647-cf4fd5369f4d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "862edba1e887977ed752286e35ec91b174aae5efb95258cca4d402802cdb42c4"
+  },
+  "nodeGroups": [],
+  "id": "F8MBHkqXAQCz03EN",
+  "tags": []
+}
